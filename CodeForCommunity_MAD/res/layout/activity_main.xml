@@ -5,7 +5,7 @@
     tools:context=".MainActivity" >
 
     <ImageButton
-        android:id="@+id/imageButton1"
+        android:id="@+id/bFind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -13,5 +13,15 @@
         android:layout_marginTop="88dp"
         android:background="@drawable/find"
         android:src="@android:drawable/btn_star" />
+
+    <Button
+        android:id="@+id/bCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/bFind"
+        android:layout_alignRight="@+id/bFind"
+        android:layout_below="@+id/bFind"
+        android:layout_marginTop="104dp"
+        android:text="Create" />
   
 </RelativeLayout>
