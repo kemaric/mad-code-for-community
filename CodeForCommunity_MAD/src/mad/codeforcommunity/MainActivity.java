@@ -1,8 +1,6 @@
 package mad.codeforcommunity;
 
 
-
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -16,12 +14,28 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		Button startProject = (Button) findViewById(R.id.bStart_Project);
-		
 		startProject.setOnClickListener(new View.OnClickListener() {
 			
-			public void onClick(View v) {	
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				try {
+					Class startClass = Class.forName("mad.codeforcommunity.Find_Project");
+					Intent projectStart = new Intent(MainActivity.this, startClass);
+					startActivity(projectStart);
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		Button findProject = (Button) findViewById(R.id.bFind);
+		findProject.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				try {
 					Class startClass = Class.forName("mad.codeforcommunity.Start_Project");
 					Intent projectStart = new Intent(MainActivity.this, startClass);
@@ -30,8 +44,7 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-				
+
 			}
 		});
 		

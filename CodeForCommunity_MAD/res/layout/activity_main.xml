@@ -4,24 +4,23 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <ImageButton
-        android:id="@+id/bFind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="88dp"
-        android:background="@drawable/find"
-        android:src="@android:drawable/btn_star" />
-
     <Button
         android:id="@+id/bStart_Project"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/bFind"
+        android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/bFind"
-        android:layout_below="@+id/bFind"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="176dp"
         android:text="Start Project" />
+
+    <Button
+        android:id="@+id/bFind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/bStart_Project"
+        android:layout_marginLeft="96dp"
+        android:layout_marginTop="65dp"
+        android:text="Find Project" />
   
 </RelativeLayout>
