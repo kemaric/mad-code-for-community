@@ -24,6 +24,9 @@
         </activity>
         <activity
             android:name="mad.codeforcommunity.Start_Project">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 
