@@ -6,6 +6,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/S3_SimpleDB_SNS_SQS_Demo"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
-	<classpathentry kind="lib" path="/home/vinnie/workspace/CodeForCommunity_MAD/libs/aws-android-sdk-1.4.4-debug.jar"/>
+	<classpathentry kind="lib" path="libs/aws-android-sdk-1.4.4-debug.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

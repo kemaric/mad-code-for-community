@@ -17,8 +17,6 @@ package mad.codeforcommunity;
 
 import java.util.List;
 
-import com.amazonaws.demo.s3.S3ObjectView;
-
 
 
 import android.content.Intent;
