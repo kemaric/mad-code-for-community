@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try {
-					Class startClass = Class.forName("mad.codeforcommunity.Find_Project");
+					Class startClass = Class.forName("mad.codeforcommunity.Start_Project");
 					Intent projectStart = new Intent(MainActivity.this, startClass);
 					startActivity(projectStart);
 				} catch (ClassNotFoundException e) {
@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try {
-					Class startClass = Class.forName("mad.codeforcommunity.Start_Project");
+					Class startClass = Class.forName("mad.codeforcommunity.Find_Project");
 					Intent projectStart = new Intent(MainActivity.this, startClass);
 					startActivity(projectStart);
 				} catch (ClassNotFoundException e) {
