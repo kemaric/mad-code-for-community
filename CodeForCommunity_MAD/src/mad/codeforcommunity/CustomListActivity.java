@@ -17,8 +17,10 @@ package mad.codeforcommunity;
 import java.util.List;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,7 +34,7 @@ public abstract class CustomListActivity extends AlertActivity {
 	protected TextView loadingText;
 	protected Button moreButton;
 	protected ArrayAdapter<String> itemListAdapter;
-		
+
 	public static final int LEFT = 0;
 	public static final int CENTER = 1;
 		
@@ -115,6 +117,8 @@ public abstract class CustomListActivity extends AlertActivity {
     
     protected void startPopulateList(){
     	Thread t = new Thread() {
+    		
+    		
     		@Override
     		public void run(){
     			try{

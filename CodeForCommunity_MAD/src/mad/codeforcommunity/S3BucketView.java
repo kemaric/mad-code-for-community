@@ -59,7 +59,11 @@ public class S3BucketView extends CustomListActivity{
     }
     
     protected void obtainListItems(){
-		new GetObjectNamesForBucketTask().execute();
+    	this.runOnUiThread(new Runnable() {
+    		public void run() {
+    			new GetObjectNamesForBucketTask().execute();
+    		}
+    	});
     }
         
     protected void obtainMoreItems(){
@@ -78,8 +82,8 @@ public class S3BucketView extends CustomListActivity{
 		    }
 		 });
 	}
-    	
-	private class GetObjectNamesForBucketTask extends AsyncTask<Void, Void, Void> {
+	
+	public class GetObjectNamesForBucketTask extends AsyncTask<Void, Void, Void> {
 
 		protected Void doInBackground(Void... voids) {
 
@@ -94,7 +98,7 @@ public class S3BucketView extends CustomListActivity{
 		}
 	}
 	
-	private class GetMoreObjectNamesForBucketTask extends AsyncTask<Void, Void, Void> {
+	public class GetMoreObjectNamesForBucketTask extends AsyncTask<Void, Void, Void> {
 
 		protected Void doInBackground(Void... voids) {
 
@@ -108,4 +112,6 @@ public class S3BucketView extends CustomListActivity{
 			getHandler().post(postMore);
 		}
 	}
+    	
+
 }
