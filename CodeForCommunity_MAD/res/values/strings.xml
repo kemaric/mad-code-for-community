@@ -2,7 +2,12 @@
 <resources>
 
     <string name="app_name">CodeForCommunity_MAD</string>
+    <string name="hello">Open calendar</string>
+    <string name="open">Open</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="title_activity_splash">Splash</string>
+    <color name="text_color">#31D1F1</color>
+    <color name="white">#ffffff</color>
 
 </resources>
