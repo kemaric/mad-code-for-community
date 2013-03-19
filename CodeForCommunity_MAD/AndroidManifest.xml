@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme" 
         android:debuggable="true">
         <activity
-            android:name="mad.codeforcommunity.MainActivity"
+            android:name="mad.codeforcommunity.Splash"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,57 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity
-            android:name="mad.codeforcommunity.Start_Project"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name="mad.codeforcommunity.S3Menu"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name="mad.codeforcommunity.CustomListActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name="mad.codeforcommunity.S3BucketList"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name="mad.codeforcommunity.S3BucketView"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name="mad.codeforcommunity.S3ObjectView"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity
-            android:name="mad.codeforcommunity.Find_Project"
+            android:name="mad.codeforcommunity.CalendarView"
             android:label="@string/app_name" >
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
