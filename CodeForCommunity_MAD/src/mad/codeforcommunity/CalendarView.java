@@ -90,7 +90,8 @@ public class CalendarView extends Activity {
 		    	TextView date = (TextView)v.findViewById(R.id.date);
 		        if(date instanceof TextView && !date.getText().equals("")) {
 		        	
-		        	Intent intent = new Intent();
+		        	/*OLD CODE
+		        	 * Intent intent = new Intent();
 		        	String day = date.getText().toString();
 		        	if(day.length()==1) {
 		        		day = "0"+day;
@@ -99,6 +100,22 @@ public class CalendarView extends Activity {
 		        	intent.putExtra("date", android.text.format.DateFormat.format("yyyy-MM", month)+"-"+day);
 		        	setResult(RESULT_OK, intent);
 		        	finish();
+		        	*/
+		        	
+		        	Bundle extras = new Bundle();
+		        	String day = date.getText().toString();
+		        	if(day.length()==1) {
+		        		day = "0"+day;
+		        	}
+		        	// return chosen date as string format 
+		        	extras.putString("date", android.text.format.DateFormat.format("yyyy-MM", month)+"-"+day);
+		        	
+		    		Intent intent = new Intent(CalendarView.this, EventView.class);
+		    		intent.putExtras(extras);
+		        	
+		    		startActivity(intent);
+		        	
+		        	
 		        }
 		        
 		    }
