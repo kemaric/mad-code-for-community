@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -73,6 +74,40 @@ public class QueryDb {
 		return result;
 	}
 
+
+	protected static HashSet<String> getEventDays(String result) {
+
+		
+		String date = null;
+		String[] dateSplit;
+		int IndexForDay = 2; // year-month-day = [0]-[1]-[2]
+		String day = null;
+
+		HashSet<String>EventDays= new HashSet<String>();
+		//ArrayList<String> EventDays = new ArrayList<String>();
+		try {
+			jArray = new JSONArray(result);
+			JSONObject json_data = null;
+			for (int i = 0; i < jArray.length(); i++) {
+				json_data = jArray.getJSONObject(i);
+
+				date = json_data.getString("date");
+				dateSplit = date.split("-");// year-month-day
+				day = dateSplit[IndexForDay];// indexForDay=2
+
+				EventDays.add(day);
+
+			}
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+
+		return EventDays;
+
+	}
+
 	protected static ArrayList<Event> getEventInfo(String result) {
 		// title
 		// date
@@ -81,6 +116,7 @@ public class QueryDb {
 		// contact_name
 		// contact_email
 		// contact_phone
+		
 
 		String title = null, date = null, description = null, location = null, contact_name = null, contact_email = null, contact_phone = null;
 
@@ -98,7 +134,7 @@ public class QueryDb {
 				contact_email = json_data.getString("contact_email");
 				contact_phone = json_data.getString("contact_phone");
 
-				Event e = new Event(title, date);
+				Event e = new Event( title,date,description, location,contact_name,contact_email,contact_phone);
 
 				EventList.add(e);
 
