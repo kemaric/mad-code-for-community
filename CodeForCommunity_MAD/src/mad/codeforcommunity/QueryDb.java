@@ -6,167 +6,152 @@ import android.view.Menu;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader; 
-import java.util.ArrayList; 
-import org.apache.http.HttpEntity; 
-import org.apache.http.HttpResponse; 
-import org.apache.http.NameValuePair; 
-import org.apache.http.client.HttpClient; 
-import org.apache.http.client.entity.UrlEncodedFormEntity; 
-import org.apache.http.client.methods.HttpPost; 
-import org.apache.http.impl.client.DefaultHttpClient; 
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray; 
-import org.json.JSONException; 
-import org.json.JSONObject; 
-import android.app.ListActivity; 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.app.ListActivity;
 import android.content.Intent;
-import android.net.ParseException; 
-import android.os.Bundle; 
-import android.util.Log; 
+import android.net.ParseException;
+import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
-public class QueryDb  {
+public class QueryDb {
 
-	static JSONArray jArray; 
-	static String result = null; 
-	static InputStream is = null; 
-	static StringBuilder sb=null;
+	static JSONArray jArray;
+	static String result = null;
+	static InputStream is = null;
+	static StringBuilder sb = null;
+	static String Base_URL = "http://mobileappdevelopersclub.com/";
 
+	protected static String queryDatabase(String phpScriptName,
+			ArrayList<NameValuePair> searchKeys) {
 
-	protected static ArrayList<String> queryGreekGroups(ArrayList<String> fields, int id) {
-
-
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("frat", Integer.toString(id)));
-		
-		//http post
-		
-		
-		try{
+		// http Post
+		try {
 			HttpClient httpclient = new DefaultHttpClient();
-			String url = "http://mobileappdevelopersclub.com/greek_search.php";
+			String url = Base_URL + phpScriptName;
 			HttpPost httppost = new HttpPost(url);
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			httppost.setEntity(new UrlEncodedFormEntity(searchKeys));
 			HttpResponse response = httpclient.execute(httppost);
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
-		}catch(Exception e){
-			Log.e("log_tag", "Error in http connection"+e.toString());
+		} catch (Exception e) {
+			Log.e("log_tag", "Error in http connection" + e.toString());
 		}
-		//convert response to string
-		try{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
+
+		// convert response to string
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					is, "iso-8859-1"), 8);
 			sb = new StringBuilder();
 			sb.append(reader.readLine() + "\n");
 
-			String line="0";
+			String line = "0";
 			while ((line = reader.readLine()) != null) {
 				sb.append(line + "\n");
 			}
 			is.close();
-			result=sb.toString();
-		}catch(Exception e){
-			Log.e("log_tag", "Error converting result "+e.toString());
+			result = sb.toString();
+		} catch (Exception e) {
+			Log.e("log_tag", "Error converting result " + e.toString());
 		}
-		//paring data
 
-
-		fields = getGreekInfo(result, fields);
-		
-
-
-		return fields;
+		// paring data
+		return result;
 	}
 
-	protected static ArrayList<String> getGreekInfo(String result, ArrayList<String> toBeReturned) {
-		String id = null;
-		String name = null;
-		String description= null;
-		String address = null;
-		String contactNm = null;
-		String contactEm = null;
-		try{
+	protected static ArrayList<Event> getEventInfo(String result) {
+		// title
+		// date
+		// description
+		// location
+		// contact_name
+		// contact_email
+		// contact_phone
+
+		String title = null, date = null, description = null, location = null, contact_name = null, contact_email = null, contact_phone = null;
+
+		ArrayList<Event> EventList = new ArrayList<Event>();
+		try {
 			jArray = new JSONArray(result);
-			JSONObject json_data=null;
-			for(int i=0;i<jArray.length();i++){
+			JSONObject json_data = null;
+			for (int i = 0; i < jArray.length(); i++) {
 				json_data = jArray.getJSONObject(i);
-				id = json_data.getString("id");
-				name=json_data.getString("name");
-				description=json_data.getString("description");
-				address = json_data.getString("address");
-				contactNm = json_data.getString("contact");
-				contactEm = json_data.getString("email");
+				title = json_data.getString("title");
+				date = json_data.getString("date");
+				description = json_data.getString("description");
+				location = json_data.getString("location");
+				contact_name = json_data.getString("contact_name");
+				contact_email = json_data.getString("contact_email");
+				contact_phone = json_data.getString("contact_phone");
+
+				Event e = new Event(title, date);
+
+				EventList.add(e);
 
 			}
-		}
-		catch(JSONException e1){
+		} catch (JSONException e1) {
 			e1.printStackTrace();
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 
+		//
+		// HashMap<String, String> returnValues = new HashMap<String, String>();
+		//
+		// returnValues.put("title", title);
+		// returnValues.put("date",date);
+		// returnValues.put("description",description);
+		// returnValues.put("location",location);
+		// returnValues.put("contact_name",contact_name);
+		// returnValues.put("contact_email",contact_email);
+		// returnValues.put("contact_phone",contact_phone);
 
-		toBeReturned.add(id);
-		toBeReturned.add(name);
-		toBeReturned.add(description);
-		toBeReturned.add(address);
-		toBeReturned.add(contactNm);
-		toBeReturned.add(contactEm);
-
-		return toBeReturned;
-
-
+		return EventList;
 
 	}
-
-	
-	protected static ArrayList<String> queryEvents(ArrayList<String> fields) {
-
-
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		//nameValuePairs.add(new BasicNameValuePair("frat", MainActivity.selectedFrat));
-		
-		//http post
-		
-		
-		try{
-			HttpClient httpclient = new DefaultHttpClient();
-			String url = "http://mobileappdevelopersclub.com/event_search.php";
-			HttpPost httppost = new HttpPost(url);
-			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-		}catch(Exception e){
-			Log.e("log_tag", "Error in http connection"+e.toString());
-		}
-		//convert response to string
-		try{
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-			sb = new StringBuilder();
-			sb.append(reader.readLine() + "\n");
-
-			String line="0";
-			while ((line = reader.readLine()) != null) {
-				sb.append(line + "\n");
-			}
-			is.close();
-			result=sb.toString();
-		}catch(Exception e){
-			Log.e("log_tag", "Error converting result "+e.toString());
-		}
-		//paring data
-
-
-		fields = getGreekInfo(result, fields);
-		
-
-
-		return fields;
-	}
-
-
-
+	/*
+	 * protected static ArrayList<String> queryEvents(ArrayList<String> fields)
+	 * {
+	 * 
+	 * ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+	 * // nameValuePairs.add(new BasicNameValuePair("frat", //
+	 * MainActivity.selectedFrat));
+	 * 
+	 * // http post
+	 * 
+	 * try { HttpClient httpclient = new DefaultHttpClient(); String url =
+	 * "http://mobileappdevelopersclub.com/event_search.php"; HttpPost httppost
+	 * = new HttpPost(url); httppost.setEntity(new
+	 * UrlEncodedFormEntity(nameValuePairs)); HttpResponse response =
+	 * httpclient.execute(httppost); HttpEntity entity = response.getEntity();
+	 * is = entity.getContent(); } catch (Exception e) { Log.e("log_tag",
+	 * "Error in http connection" + e.toString()); } // convert response to
+	 * string try { BufferedReader reader = new BufferedReader(new
+	 * InputStreamReader( is, "iso-8859-1"), 8); sb = new StringBuilder();
+	 * sb.append(reader.readLine() + "\n");
+	 * 
+	 * String line = "0"; while ((line = reader.readLine()) != null) {
+	 * sb.append(line + "\n"); } is.close(); result = sb.toString(); } catch
+	 * (Exception e) { Log.e("log_tag", "Error converting result " +
+	 * e.toString()); } // paring data
+	 * 
+	 * fields = getGreekInfo(result, fields);
+	 * 
+	 * return fields; }
+	 */
 
 }
