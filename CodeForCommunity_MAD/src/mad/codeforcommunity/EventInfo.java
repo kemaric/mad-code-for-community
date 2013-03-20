@@ -9,11 +9,19 @@ import android.widget.TextView;
 
 public class EventInfo extends Activity {
 
-	TextView nm;
-	TextView decription;
-	TextView add;
-	TextView conName;
-	TextView host;
+	TextView title;
+	TextView date;
+	TextView description;
+	TextView location;
+	TextView contact_name;
+	TextView contact_email;
+	TextView contact_phone;
+
+//	TextView nm;
+//	TextView decription;
+//	TextView add;
+//	TextView conName;
+//	TextView host;
 	ArrayList<String> values = new ArrayList<String>();
 
 	@Override
@@ -26,28 +34,34 @@ public class EventInfo extends Activity {
 		values.clear();
 		values.addAll(vals);
 
-		TextView host = (TextView) findViewById(R.id.host);
-		host.setText(vals.get(0));
+		title = (TextView) findViewById(R.id.title);
+		title.setText(vals.get(0));
 
-		TextView nm = (TextView) findViewById(R.id.name);
-		nm.setText(vals.get(1));
+		date = (TextView) findViewById(R.id.date);
+		date.setText(vals.get(1));
 
-		TextView decription = (TextView) findViewById(R.id.description);
-		decription.setText(vals.get(2));
+		description = (TextView) findViewById(R.id.description);
+		description.setText(vals.get(2));
 
-		TextView add = (TextView) findViewById(R.id.address);
-		add.setText(vals.get(3));
+		location = (TextView) findViewById(R.id.location);
+		location.setText(vals.get(3));
 
-		TextView conName = (TextView) findViewById(R.id.contact_name);
-		conName.setText(vals.get(4));
+		contact_name = (TextView) findViewById(R.id.contact_name);
+		contact_name.setText(vals.get(4));
+		
+		 contact_email = (TextView) findViewById(R.id. contact_email);
+		 contact_email.setText(vals.get(5));
+		
+		 contact_phone = (TextView) findViewById(R.id.contact_phone);
+		 contact_phone.setText(vals.get(6));
 
 	}
 
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.activity_event_info, menu);
-//		return true;
-//	}
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// // Inflate the menu; this adds items to the action bar if it is present.
+	// getMenuInflater().inflate(R.menu.activity_event_info, menu);
+	// return true;
+	// }
 
 }

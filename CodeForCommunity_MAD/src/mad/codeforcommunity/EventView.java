@@ -37,23 +37,34 @@ public class EventView extends ListActivity {
 		
 		for (int i = 0; i < r.nextInt(10); i++) {
 			
-			String host= Integer.toString(i);
-			String name = "Host NAME";
-			String description = "Description of Event on:" +day;
-			String address = "1101 Test Rd, 20878 MD";
-			String contact = "301-999-9999";
-			Event e = new Event(host,name,description, address, contact);
+			// title
+			// date
+			// description
+			// location
+			// contact_name
+			// contact_email
+			// contact_phone
+			
+			String title= "Random Event Title"+Integer.toString(i);
+			String date = day;
+			String description = "Description of Event on:" ;
+			String location = "1101 Test Rd, 20878 MD";
+			String contactName = "tomLarken"+Integer.toString(i);
+			String contactEmail = "tom.larken"+Integer.toString(i)+"@testEmail.com";
+			String contactPhone = "301-999-9999";
+			Event e = new Event(title,date,description,location,contactName,contactEmail,contactPhone);
 			events.add(e);
 		}
 
-		ArrayList<String> eventNames = new ArrayList<String>();
+		ArrayList<String> eventTitle = new ArrayList<String>();
 
 		for (int i = 0; i < events.size(); i++) {
-			eventNames.add(events.get(i).name);
+			eventTitle.add(events.get(i).getTitle());
+			
 		}
 
 		setListAdapter(new ArrayAdapter<String>(EventView.this,
-				android.R.layout.simple_list_item_1, eventNames));
+				android.R.layout.simple_list_item_1, eventTitle));
 
 	}
 
