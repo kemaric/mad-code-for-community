@@ -151,16 +151,16 @@ public class CalendarView extends Activity {
 			items.clear();	
 			
 			//Code should be correct but DB calls are not tested
-/* 
+ 
 			ArrayList<NameValuePair> argrsList= new ArrayList<NameValuePair>();
 			String dateValue =android.text.format.DateFormat.format("yyyy-MM", month).toString();
 			
 			argrsList.add(new BasicNameValuePair("date",dateValue));
 
-			JSONString=QueryDb.queryDatabase("event_days_in_month.php",argrsList );//returns JSON String of days in the month that have events, String needs to be parsed
+			JSONString=QueryDb.queryDatabase("events_by_month.php",argrsList );//returns JSON String of days in the month that have events, String needs to be parsed
 			items.addAll(QueryDb.getEventDays(JSONString));
 
-*/
+
 //			 format random values. You can implement a dedicated class to provide real values
 			for(int i=0;i<31;i++) {
 				Random r = new Random();
