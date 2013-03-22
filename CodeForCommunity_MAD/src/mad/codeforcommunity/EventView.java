@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
@@ -17,54 +21,63 @@ import android.widget.ListView;
 
 public class EventView extends ListActivity {
 
-	ArrayList<Event> events;
+	public Handler handler;
+	public ArrayList<Event> events;
+	public String day;
+	public ArrayAdapter adapter;
+
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		View v = this.getCurrentFocus();
 		
 		Bundle extras = getIntent().getExtras();
-		String day = extras.getString("date");
+		day = extras.getString("date");
 		
-	//	HashSet<String> subscribed = viewSubscribed(v);
-
+	
 		// events = QueryDb.queryEvents(subscribed);
 
 		// Test Events	
 		events = new ArrayList<Event>();
 		
-		Random r = new Random();
+		handler = new Handler();
+	    handler.post(loadEventsList);
 		
-		for (int i = 0; i < r.nextInt(10); i++) {
-			
-			// title
-			// date
-			// description
-			// location
-			// contact_name
-			// contact_email
-			// contact_phone
-			
-			String title= "Random Event Title"+Integer.toString(i);
-			String date = day;
-			String description = "Description of Event on:" ;
-			String location = "1101 Test Rd, 20878 MD";
-			String contactName = "tomLarken"+Integer.toString(i);
-			String contactEmail = "tom.larken"+Integer.toString(i)+"@testEmail.com";
-			String contactPhone = "301-999-9999";
-			Event e = new Event(title,date,description,location,contactName,contactEmail,contactPhone);
-			events.add(e);
-		}
-
-		ArrayList<String> eventTitle = new ArrayList<String>();
-
-		for (int i = 0; i < events.size(); i++) {
-			eventTitle.add(events.get(i).getTitle());
-			
-		}
-
-		setListAdapter(new ArrayAdapter<String>(EventView.this,
-				android.R.layout.simple_list_item_1, eventTitle));
+		
+//		Random r = new Random();
+//		// title
+//			// date
+//			// description
+//			// location
+//			// contact_name
+//			// contact_email
+//			// contact_phone
+//		for (int i = 0; i < r.nextInt(10); i++) {
+//
+//			String title= "Random Event Title"+Integer.toString(i);
+//			String date = day;
+//			String description = "Description of Event on:" ;
+//			String location = "1101 Test Rd, 20878 MD";
+//			String contactName = "tomLarken"+Integer.toString(i);
+//			String contactEmail = "tom.larken"+Integer.toString(i)+"@testEmail.com";
+//			String contactPhone = "301-999-9999";
+//			Event e = new Event(title,date,description,location,contactName,contactEmail,contactPhone);
+//			events.add(e);
+//		}
+//
+//		
+//		
+//		
+//		ArrayList<String> eventTitle = new ArrayList<String>();
+//
+//		for (int i = 0; i < events.size(); i++) {
+//			eventTitle.add(events.get(i).getTitle());
+//			
+//		}
+//
+//		//setListAdapter();
+//		adapter= new ArrayAdapter<String>(EventView.this,android.R.layout.simple_list_item_1, eventTitle);
+				
 
 	}
 
@@ -88,29 +101,55 @@ public class EventView extends ListActivity {
 		startActivity(intent);
 	}
 
-//	public HashSet<String> viewSubscribed(View v) {
-//		SQLiteDatabase db;
-//		HashSet<String> results = new HashSet<String>();
-//		db = openOrCreateDatabase("subscribed.db",
-//				SQLiteDatabase.CREATE_IF_NECESSARY, null);
-//		try {
-//			String sql = "select NAME from tbl_Contain";
-//			Cursor c = db.rawQuery(sql, null);
-//
-//			if (c != null) {
-//				if (c.moveToFirst()) {
-//					do {
-//						String name = c.getString(c.getColumnIndex("NAME"));
-//						results.add(name);
-//					} while (c.moveToNext());
-//				}
+	public Runnable loadEventsList = new Runnable() {
+		//query database to find days in this month that have events
+		public void run() {
+			String JSONString=null;
+			//	events.clear();	
+			
+			//Code should be correct but DB calls are not tested
+ 
+			ArrayList<NameValuePair> argrsList= new ArrayList<NameValuePair>();			
+			argrsList.add(new BasicNameValuePair("date",day));
+
+			JSONString=QueryDb.queryDatabase("events_by_day.php",argrsList );//returns JSON String of days in the month that have events, String needs to be parsed
+			events.addAll(QueryDb.getEvents(JSONString));
+
+			
+//			Random r = new Random();
+//			// title
+//				// date
+//				// description
+//				// location
+//				// contact_name
+//				// contact_email
+//				// contact_phone
+//			for (int i = 0; i < r.nextInt(10); i++) {
+//	
+//				String title= "Random Event Title"+Integer.toString(i);
+//				String date = day;
+//				String description = "Description of Event on:" ;
+//				String location = "1101 Test Rd, 20878 MD";
+//				String contactName = "tomLarken"+Integer.toString(i);
+//				String contactEmail = "tom.larken"+Integer.toString(i)+"@testEmail.com";
+//				String contactPhone = "301-999-9999";
+//				Event e = new Event(title,date,description,location,contactName,contactEmail,contactPhone);
+//				events.add(e);
 //			}
+			
+			ArrayList<String> eventTitle = new ArrayList<String>();
+
+			for (int i = 0; i < events.size(); i++) {
+				eventTitle.add(events.get(i).getTitle());
+	
+			}
+
+			setListAdapter(new ArrayAdapter<String>(EventView.this,android.R.layout.simple_list_item_1, eventTitle));				
+
 //
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		return results;
-//
-//	}
+//			setListAdapter(adapter);
+//			adapter.setItems(eventTitle);
+//			adapter.notifyDataSetChanged();
+		}
+	};
 }
