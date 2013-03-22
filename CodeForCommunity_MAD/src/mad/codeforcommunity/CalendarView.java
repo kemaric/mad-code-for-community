@@ -162,14 +162,14 @@ public class CalendarView extends Activity {
 
 
 //			 format random values. You can implement a dedicated class to provide real values
-			for(int i=0;i<31;i++) {
-				Random r = new Random();
-				
-				if(r.nextInt(10)>6)
-				{
-					items.add(Integer.toString(i));
-				}
-			}
+//			for(int i=0;i<31;i++) {
+//				Random r = new Random();
+//				
+//				if(r.nextInt(10)>6)
+//				{
+//					items.add(Integer.toString(i));
+//				}
+//			}
 
 			
 			adapter.setItems(items);

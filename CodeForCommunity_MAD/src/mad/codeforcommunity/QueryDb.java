@@ -108,7 +108,7 @@ public class QueryDb {
 
 	}
 
-	protected static ArrayList<Event> getEventInfo(String result) {
+	protected static ArrayList<Event> getEvents(String result) {
 		// title
 		// date
 		// description
