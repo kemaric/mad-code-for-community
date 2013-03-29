@@ -144,7 +144,7 @@ public class EventView extends ListActivity {
 	
 			}
 
-			setListAdapter(new ArrayAdapter<String>(EventView.this,android.R.layout.simple_list_item_1, eventTitle));				
+			setListAdapter(new ArrayAdapter<String>(EventView.this, R.layout.my_simple_event_1, eventTitle));				
 
 //
 //			setListAdapter(adapter);
