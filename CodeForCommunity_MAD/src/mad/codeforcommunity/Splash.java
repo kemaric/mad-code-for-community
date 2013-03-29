@@ -50,4 +50,12 @@ public class Splash extends Activity {
 		return true;
 	}
 
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
+
 }
