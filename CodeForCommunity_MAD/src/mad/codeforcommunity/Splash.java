@@ -31,7 +31,7 @@ public class Splash extends Activity {
 				}finally {
 					Time today = new Time(Time.getCurrentTimezone());
 					
-					Intent intent = new Intent(Splash.this, CalendarView.class);
+					Intent intent = new Intent(Splash.this, Home.class);
 					
 		    		intent.putExtra("date", today.year+"-"+today.month+"-"+today.monthDay);
 		    		startActivityForResult(intent, PICK_DATE_REQUEST);				
