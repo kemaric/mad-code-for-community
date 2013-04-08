@@ -4,7 +4,11 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.text.format.Time;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class EventInfo extends Activity {
@@ -63,5 +67,50 @@ public class EventInfo extends Activity {
 	// getMenuInflater().inflate(R.menu.activity_event_info, menu);
 	// return true;
 	// }
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu);
+		MenuInflater blowUp = getMenuInflater();
+		blowUp.inflate(R.menu.activity_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.monthI:
+			Time today = new Time(Time.getCurrentTimezone());
+			Intent intent = new Intent(this, CalendarView.class);
+			intent.putExtra("date", today.year+"-"+today.month+"-"+today.monthDay);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivityForResult(intent, 1);	
+			break;
+		case R.id.dayI: 
+			setContentView(R.layout.calendar_item);;
+			today = new Time(Time.getCurrentTimezone());
+			intent = new Intent(this, EventView.class);
+			intent.putExtra("date", today.year+"-"+today.month+"-"+today.monthDay);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			break;
+		case R.id.createI:
+			setContentView(R.layout.create_layout);
+			Intent createInt = new Intent(this, CreateEvent.class );
+			startActivity(createInt);
+			break;
+		case R.id.refreshI:
+			//this doesnt have to refresh here since event wont change 
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	public void onOptionsMenuClosed(Menu menu) {
+		// TODO Auto-generated method stub
+		super.onOptionsMenuClosed(menu);
+	}
 
 }

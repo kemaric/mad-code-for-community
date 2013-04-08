@@ -28,6 +28,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.format.Time;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -138,6 +142,41 @@ public class CalendarView extends Activity {
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
 	}
 	
+	//Method to load the event view. Used by the button click and menu option 
+	public void loadEventView(View v){
+		TextView date = (TextView)v.findViewById(R.id.date);
+		ImageView image =(ImageView)v.findViewById(R.id.date_icon);
+		if(date instanceof TextView && !date.getText().equals("")) {
+			if (image.getVisibility()== View.VISIBLE){
+				/*OLD CODE
+				 * Intent intent = new Intent();
+        	String day = date.getText().toString();
+        	if(day.length()==1) {
+        		day = "0"+day;
+        	}
+        	// return chosen date as string format 
+        	intent.putExtra("date", android.text.format.DateFormat.format("yyyy-MM", month)+"-"+day);
+        	setResult(RESULT_OK, intent);
+        	finish();
+				 */
+
+				Bundle extras = new Bundle();
+				String day = date.getText().toString();
+				if(day.length()==1) {
+					day = "0"+day;
+				}
+				// return chosen date as string format 
+				extras.putString("date", android.text.format.DateFormat.format("yyyy-MM", month)+"-"+day);
+
+				Intent intent = new Intent(CalendarView.this, EventView.class);
+				intent.putExtras(extras);
+
+				startActivity(intent);
+			}	
+
+		}
+	}
+	
 	public void onNewIntent(Intent intent) {
 		String date = intent.getStringExtra("date");
 		String[] dateArr = date.split("-"); // date format is yyyy-mm-dd
@@ -176,4 +215,51 @@ public class CalendarView extends Activity {
 			adapter.notifyDataSetChanged();
 		}
 	};
+	
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu);
+		MenuInflater blowUp = getMenuInflater();
+		blowUp.inflate(R.menu.activity_main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId()){
+		case R.id.monthI:
+			//returns to the current month 
+			Time today = new Time(Time.getCurrentTimezone());
+			Intent intent = new Intent(this, CalendarView.class);
+    		intent.putExtra("date", today.year+"-"+today.month+"-"+today.monthDay);
+    		startActivityForResult(intent, 1);	
+			break;
+		case R.id.dayI:
+			setContentView(findViewById(R.layout.calendar_item));
+			//returns to the current date
+		  loadEventView(findViewById(R.layout.calendar_item));
+			break;
+		case R.id.createI:
+			//go to webpage to create new event
+			//setContentView(R.layout.create_layout);
+			Intent createInt = new Intent(this, CreateEvent.class );
+			startActivity(createInt);
+			break;
+		case R.id.refreshI:
+			//refresh the calendar
+			refreshCalendar();
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	public void onOptionsMenuClosed(Menu menu) {
+		// TODO Auto-generated method stub
+		super.onOptionsMenuClosed(menu);
+	}
+	
 }

@@ -22,9 +22,11 @@ public class Home extends Activity{
 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Uri uri = Uri.parse("www.google.com");
-				Intent intent = new Intent(Intent.ACTION_VIEW,uri);
-				startActivity(intent);
+				//Uri uri = Uri.parse("www.google.com");
+				//Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+				//startActivity(intent);
+				Intent createInt = new Intent(Home.this, CreateEvent.class);
+				startActivity(createInt);
 			}
 
 		});
