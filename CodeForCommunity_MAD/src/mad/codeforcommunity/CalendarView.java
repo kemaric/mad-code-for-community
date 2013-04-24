@@ -39,6 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CalendarView extends Activity {
@@ -47,6 +48,7 @@ public class CalendarView extends Activity {
 	public CalendarAdapter adapter;
 	public Handler handler;
 	public ArrayList<String> items; // container to store some random calendar items
+	public final Activity curr = this;
 	
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -195,7 +197,8 @@ public class CalendarView extends Activity {
 			String dateValue =android.text.format.DateFormat.format("yyyy-MM", month).toString();
 			
 			argrsList.add(new BasicNameValuePair("date",dateValue));
-
+			
+			try {
 			JSONString=QueryDb.queryDatabase("events_by_month.php",argrsList );//returns JSON String of days in the month that have events, String needs to be parsed
 			items.addAll(QueryDb.getEventDays(JSONString));
 
@@ -213,6 +216,9 @@ public class CalendarView extends Activity {
 			
 			adapter.setItems(items);
 			adapter.notifyDataSetChanged();
+			} catch (HttpConnectionFailedThrowable e) {
+				Toast.makeText(curr, "No Internet Connection", 5000).show();
+			}
 		}
 	};
 	
