@@ -38,7 +38,7 @@ public class QueryDb {
 	static String Base_URL = "http://mobileappdevelopersclub.com/";
 
 	protected static String queryDatabase(String phpScriptName,
-			ArrayList<NameValuePair> searchKeys) {
+			ArrayList<NameValuePair> searchKeys) throws HttpConnectionFailedThrowable {
 
 		// http Post
 		try {
@@ -51,6 +51,7 @@ public class QueryDb {
 			is = entity.getContent();
 		} catch (Exception e) {
 			Log.e("log_tag", "Error in http connection" + e.toString());
+			throw new HttpConnectionFailedThrowable();
 		}
 
 		// convert response to string

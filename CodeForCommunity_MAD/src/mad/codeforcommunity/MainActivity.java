@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -14,6 +15,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		final Activity curr = this;
 
 		Button startProject = (Button) findViewById(R.id.bStart_Project);
 		startProject.setOnClickListener(new View.OnClickListener() {
@@ -25,7 +27,7 @@ public class MainActivity extends Activity {
 					Intent projectStart = new Intent(MainActivity.this, startClass);
 					startActivity(projectStart);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+					Toast.makeText(curr ,"An Error Occured", 5000).show();
 					e.printStackTrace();
 				}
 			}
@@ -41,7 +43,7 @@ public class MainActivity extends Activity {
 					Intent projectStart = new Intent(MainActivity.this, startClass);
 					startActivity(projectStart);
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+					Toast.makeText(curr ,"An Error Occured", 5000).show();
 					e.printStackTrace();
 				}
 
