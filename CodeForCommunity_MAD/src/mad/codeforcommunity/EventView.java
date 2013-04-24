@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class EventView extends ListActivity {
 
@@ -25,6 +26,7 @@ public class EventView extends ListActivity {
 	public ArrayList<Event> events;
 	public String day;
 	public ArrayAdapter adapter;
+	public final Activity curr = this;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +113,7 @@ public class EventView extends ListActivity {
  
 			ArrayList<NameValuePair> argrsList= new ArrayList<NameValuePair>();			
 			argrsList.add(new BasicNameValuePair("date",day));
-
+		try {
 			JSONString=QueryDb.queryDatabase("events_by_day.php",argrsList );//returns JSON String of days in the month that have events, String needs to be parsed
 			events.addAll(QueryDb.getEvents(JSONString));
 
@@ -145,7 +147,9 @@ public class EventView extends ListActivity {
 			}
 
 			setListAdapter(new ArrayAdapter<String>(EventView.this, R.layout.my_simple_event_1, eventTitle));				
-
+		}catch (HttpConnectionFailedThrowable e) {
+				Toast.makeText(curr, "No Internet Connection", 5000).show();
+			}
 //
 //			setListAdapter(adapter);
 //			adapter.setItems(eventTitle);
